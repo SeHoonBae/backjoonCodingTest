@@ -4,60 +4,51 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-// 백준 알고리즘 15654번 문제
-// 시간제한 1초, 메모리 제한 512MB
-public class Boj15654 {
-
-    static int N, M;
-    static int[] nums, selected;
-    static StringBuffer sb;
+// 백준 15657번 문제
+// 중복 O, 순서 O(오름차순)
+public class Boj15657 {
 
     public static void main(String[] args){
         input();
-        Arrays.sort(nums);
+        Arrays.sort(arr);
+
         rec_func(1);
         System.out.println(sb.toString());
     }
 
+    static StringBuffer sb;
+    static int N, M;
+    static int[] arr, nums;
+
     static void rec_func(int k){
         if(M+1 == k){
-            for(int i=1; i<=M; i++){
-                sb.append(selected[i] + " ");
+            for(int i=1; i<nums.length; i++){
+                sb.append(nums[i] + " ");
             }
             sb.append("\n");
+
         }else{
-            for(int i=1; i<=N; i++){
-                if(!isDuplicated(nums[i]) ){
-                    selected[k] = nums[i];
+            for(int i=0; i<N; i++){
+                if(nums[k-1] <= arr[i]){
+                    nums[k] = arr[i];
                     rec_func(k+1);
-                    selected[k] = 0;
+                    nums[k] = 0;
                 }
             }
         }
     }
 
-    static boolean isDuplicated(int num){
-        for(int i=1; i< selected.length; i++){
-            if(selected[i] == 0){
-                return false;
-            } else if(num == selected[i]){
-                return true;
-            }
-        }
-        return false;
-    }
-
     static void input(){
-        sb = new StringBuffer();
         FastReader scan = new FastReader();
+        sb = new StringBuffer();
 
         N = scan.nextInt();
         M = scan.nextInt();
-        nums = new int[N+1];
-        selected = new int[M+1];
+        arr = new int[N];
+        nums = new int[M+1];
 
-        for(int i=1; i<=N; i++){
-            nums[i] = scan.nextInt();
+        for(int i=0; i<N; i++){
+            arr[i] = scan.nextInt();
         }
     }
 
@@ -106,4 +97,5 @@ public class Boj15654 {
             return str;
         }
     }
+
 }
